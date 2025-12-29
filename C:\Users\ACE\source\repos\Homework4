@@ -1,1 +1,42 @@
+using System;
+using System.Linq;
 
+class Program
+{
+    static void Main()
+    {
+        Console.Write("กรอกตัวเลข (คั่นด้วยช่องว่าง): ");
+        double[] data = Console.ReadLine()
+                               .Split(' ')
+                               .Select(double.Parse)
+                               .ToArray();
+
+        ShowResult(data);
+    }
+
+    static void ShowResult(double[] data)
+    {
+        Console.WriteLine("ค่าเฉลี่ย: " + data.Average());
+        Console.WriteLine("ค่าสูงสุด: " + data.Max());
+        Console.WriteLine("ค่าต่ำสุด: " + data.Min());
+        Console.WriteLine("ค่ากลางข้อมูล: " + GetMedian(data));
+
+        Console.WriteLine("เรียงจากมากไปน้อย: " +
+            string.Join(", ", data.OrderByDescending(x => x)));
+
+        Console.WriteLine("เรียงจากน้อยไปมาก: " +
+            string.Join(", ", data.OrderBy(x => x)));
+    }
+
+    static double GetMedian(double[] data)
+    {
+        var sorted = data.OrderBy(x => x).ToArray();
+        int n = sorted.Length;
+
+        if (n % 2 == 0)
+            return (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
+        else
+            return sorted[n / 2];
+    }
+}
+//จิรัฐโชติ นันทะสาร 683450351-7
